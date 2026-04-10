@@ -196,7 +196,7 @@ html, body { background:var(--bg); color:var(--txt); font-family:'Malgun Gothic'
     </div>
   </div>
   <div class="chart-card">
-    <div class="chart-title">항목별 상세 (만원)</div>
+    <div class="chart-title">항목별 상세 (천원)</div>
     <div class="chart-sub">2025 / 전기 대비 증감</div>
     <div id="expList"></div>
   </div>
@@ -275,7 +275,7 @@ function buildCharts() {
   new Chart(document.getElementById('revenueChart'), {
     type:'bar',
     data:{
-      labels:['매출액','매출원가','매출총이익','판관비','영업이익','순이익'],
+      labels:['매출액','매출원가','매출총이익','영업이익','순이익'],
       datasets:[
         {label:'2024', data:[13.21,7.27,5.94,5.76,0.17,0.17], backgroundColor:C.slate+'bb', borderRadius:4},
         {label:'2025', data:[16.26,9.66,6.60,6.30,0.30,0.21],
@@ -322,9 +322,9 @@ function buildCharts() {
   new Chart(document.getElementById('expPieChart'), {
     type:'doughnut',
     data:{
-      labels:['급여','임차료','퇴직급여','차량유지비','복리후생비','지급수수료','외주가공비','여비교통비','기타'],
+      labels:['급여','임차료','퇴직급여','복리후생비','지급수수료','외주가공비','여비교통비','감가상각비','기타'],
       datasets:[{
-        data:[1545,1329,859,728,489,306,234,246,416],
+        data:[15450,13290,8590,4890,3060,2340,2460,870,4160],
         backgroundColor:['#3b82f6','#10b981','#ef4444','#f59e0b','#8b5cf6','#06b6d4','#f97316','#ec4899','#64748b'],
         borderColor:CARD, borderWidth:2, hoverOffset:6
       }]
@@ -352,18 +352,17 @@ function buildCharts() {
 
   // 판관비 리스트 렌더
   const items=[
-    {name:'급여',val:1545,prev:1361,color:'#3b82f6'},
-    {name:'임차료',val:1329,prev:1377,color:'#10b981'},
-    {name:'퇴직급여',val:859,prev:0,color:'#ef4444'},
-    {name:'차량유지비',val:728,prev:837,color:'#f59e0b'},
-    {name:'복리후생비',val:489,prev:306,color:'#8b5cf6'},
-    {name:'지급수수료',val:306,prev:204,color:'#06b6d4'},
-    {name:'외주가공비',val:234,prev:483,color:'#f97316'},
-    {name:'여비교통비',val:246,prev:489,color:'#ec4899'},
-    {name:'감가상각비',val:87,prev:205,color:'#64748b'},
-    {name:'기타',val:416,prev:357,color:'#94a3b8'},
+    {name:'급여',val:15450,prev:13610,color:'#3b82f6'},
+    {name:'임차료',val:13290,prev:13770,color:'#10b981'},
+    {name:'퇴직급여',val:8590,prev:0,color:'#ef4444'},
+    {name:'복리후생비',val:4890,prev:3060,color:'#8b5cf6'},
+    {name:'지급수수료',val:3060,prev:2040,color:'#06b6d4'},
+    {name:'외주가공비',val:2340,prev:4830,color:'#f97316'},
+    {name:'여비교통비',val:2460,prev:4890,color:'#ec4899'},
+    {name:'감가상각비',val:870,prev:2050,color:'#64748b'},
+    {name:'기타',val:4160,prev:3570,color:'#94a3b8'},
   ];
-  const max=1545;
+  const max=15450;
   const el=document.getElementById('expList');
   el.innerHTML=items.map(i=>{
     const diff=i.val-i.prev; const sign=diff>=0?'+':''; const dc=diff>=0?'#34d399':'#f87171';
@@ -372,7 +371,7 @@ function buildCharts() {
       <div style="flex:1">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
           <span class="exp-name">${i.name}</span>
-          <span><span class="exp-val">${i.val.toLocaleString()}만</span><span class="exp-pct" style="color:${dc}">${sign}${diff}</span></span>
+          <span><span class="exp-val">${i.val.toLocaleString()}천</span><span class="exp-pct" style="color:${dc}">${sign}${diff}</span></span>
         </div>
         <div class="exp-bar-bg"><div class="exp-bar-fill" style="width:${(i.val/max*100).toFixed(1)}%;background:${i.color}"></div></div>
       </div>
@@ -483,10 +482,7 @@ window.addEventListener('load', ()=>{ buildCharts(); window._chartsBuilt=true; }
           <div style="font-size:10px;color:#94a3b8;">잡급 (퇴직급여)</div>
           <div style="font-size:16px;font-weight:800;color:#ef4444;">0.86억</div>
         </div>
-        <div style="background:#0f172a;border-radius:8px;padding:10px;">
-          <div style="font-size:10px;color:#94a3b8;">차량유지비</div>
-          <div style="font-size:16px;font-weight:800;color:#f59e0b;">0.73억</div>
-        </div>
+
       </div>
       <div style="background:#4c1d1d;border-radius:8px;padding:12px;margin-top:4px;border-left:3px solid #ef4444;">
         <div style="font-size:11px;font-weight:700;color:#f87171;margin-bottom:4px;">🚨 인건비 구조 변화 점검 필요</div>
